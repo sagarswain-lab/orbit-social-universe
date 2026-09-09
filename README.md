@@ -2,7 +2,7 @@
 
 **Submission for The Frontend Odyssey 2026 — Main Challenge: Reimagine Social**
 
-🔗 **Live demo:** [\[PASTE YOUR VERCEL LINK HERE\]](https://orbit-social-universe.vercel.app/)
+🔗 **Live demo:** [\[orbit-social-universe\]](https://orbit-social-universe.vercel.app/)
 
 ---
 

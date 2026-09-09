@@ -278,7 +278,7 @@ function CosmicSolarSystem({ hue }: { hue: number }) {
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute inset-0 overflow-hidden flex items-center justify-center select-none"
+      className="pointer-events-none absolute inset-0 overflow-hidden flex items-center justify-center select-none cosmic-contain"
     >
       {/* 1. Cinematic Nebula Backdrop (Only in 1st view, matching user reference image) */}
       <div className="absolute inset-0 overflow-hidden">
@@ -314,7 +314,7 @@ function CosmicSolarSystem({ hue }: { hue: number }) {
       </div>
 
       {/* 2. Centrifugal Outward Solar Wind & Expanding Waves */}
-      <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 flex items-center justify-center overflow-hidden cosmic-contain">
         {/* Continuous centrifugal expansion waves radiating outward */}
         <div
           className="animate-centrifugal-wave absolute h-[300px] w-[300px] rounded-full border border-teal/40"
@@ -592,7 +592,7 @@ export function Landing() {
   return (
     <div className="relative z-10">
       {/* ------------------------------------------------------------------ hero */}
-      <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-5 text-center">
+      <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-5 text-center cosmic-contain">
         <CosmicSolarSystem hue={hue} />
         {particlesReady && <CosmicParticles />}
 

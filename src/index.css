@@ -305,8 +305,15 @@
 .animate-float-y { animation: float-y 6s ease-in-out infinite; }
 .animate-breathe { animation: breathe 4.5s ease-in-out infinite; }
 .animate-cinematic-drift { animation: cinematic-drift 16s ease-in-out infinite; }
-.animate-centrifugal-spiral { animation: centrifugal-spiral 24s linear infinite; }
-.animate-centrifugal-wave { animation: centrifugal-wave 6s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+.animate-centrifugal-spiral { animation: centrifugal-spiral 24s linear infinite; will-change: transform; }
+.animate-centrifugal-wave { animation: centrifugal-wave 6s cubic-bezier(0.16, 1, 0.3, 1) infinite; will-change: transform; }
+
+/* ─── CLS containment: tell browser decorative layers can't shift layout ───── */
+.cosmic-contain {
+  contain: layout style paint;
+  will-change: transform;
+  transform: translateZ(0);
+}
 
 /* ─── METEOR: fast diagonal streak from top-right to bottom-left ─────────── */
 @keyframes meteor-fall {

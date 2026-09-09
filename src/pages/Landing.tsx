@@ -149,7 +149,7 @@ function CosmicParticles() {
           {/* Fading trail */}
           <div
             style={{
-              width: m.len, height: 1.5,
+              width: m.len, height: 1,
               background: `linear-gradient(90deg, transparent 0%, ${m.color}55 40%, ${m.color} 100%)`,
               borderRadius: 999,
             }}

@@ -24,7 +24,7 @@ import {
   User,
   Waves,
 } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/Button'
 import { hsl, identityGradient, MOODS, type Mood } from '@/lib/color'
@@ -967,6 +967,19 @@ export function Landing() {
   const [name, setName] = useState('')
   const [hue, setHue] = useState(you.hue)
   const [mood, setMood] = useState<Mood>('spark')
+  // Defer cosmic particle layer until after first paint so LCP text renders first.
+  // requestIdleCallback fires when the main thread is free; 200ms fallback for Safari.
+  const [particlesReady, setParticlesReady] = useState(false)
+  useEffect(() => {
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      ;(window as Window & { requestIdleCallback: (cb: () => void) => void }).requestIdleCallback(
+        () => setParticlesReady(true)
+      )
+    } else {
+      const id = setTimeout(() => setParticlesReady(true), 200)
+      return () => clearTimeout(id)
+    }
+  }, [])
 
   const enter = () => {
     complete({ name: name || 'Nova', hue, mood })
@@ -980,12 +993,9 @@ export function Landing() {
       {/* ------------------------------------------------------------------ hero */}
       <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-5 text-center">
         <CosmicSolarSystem hue={hue} />
-        <CosmicParticles />
+        {particlesReady && <CosmicParticles />}
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        <div
           className="relative z-10 mx-auto max-w-4xl py-6 px-4"
         >
           <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/60 px-4 py-1.5 text-xs text-ink-soft shadow-lg backdrop-blur-xl">
@@ -1034,7 +1044,7 @@ export function Landing() {
               Manifesto
             </Button>
           </div>
-        </motion.div>
+        </div>
 
         <motion.button
           onClick={() => scrollTo('blueprint')}

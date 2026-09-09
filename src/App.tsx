@@ -33,13 +33,11 @@ export default function App() {
       <Starfield />
       <AuroraBackground hue={hue} />
 
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait" initial={false}>
         <motion.main
           key={location.pathname}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.3 }}
           className="relative"
           role="main"
           aria-label="ORBIT Social Universe"

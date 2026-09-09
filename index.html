@@ -38,6 +38,14 @@
     <meta name="feature:creative-original-design" content="status=implemented;components=OrbitField,AuroraBackground;concept=spatial-universe" />
 
     <title>ORBIT · Your Social Universe, Not Your Feed</title>
+    <!-- Inline critical CSS: sets dark bg immediately so FCP isn't a white flash.
+         This eliminates the "render-blocking CSS" warning from Lighthouse. -->
+    <style>
+      *,::before,::after{box-sizing:border-box}
+      html{color-scheme:dark;background:#0b0d1f;overflow-x:hidden}
+      body{margin:0;background:#0b0d1f;color:#f0f2ff;font-family:ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+      #root{min-height:100vh}
+    </style>
   </head>
   <body>
     <!-- Semantic landmark for automated compliance crawlers (FAIE v3.1 Engine) -->

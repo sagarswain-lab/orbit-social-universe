@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import {
   Archive,
   ArrowRight,
@@ -6,9 +6,12 @@ import {
   CircleDot,
   Compass,
   Cpu,
+  Eye,
   Feather,
+  Film,
   Heart,
   Infinity as InfinityIcon,
+  Layers,
   Lock,
   Sparkles,
   Star,
@@ -22,51 +25,281 @@ import { useOrbitStore } from '@/store/useOrbitStore'
 
 const HUES = [265, 200, 172, 328, 40, 300, 150, 222]
 
-/* Decorative, non-interactive orbit for the hero. */
-function HeroOrbit({ hue }: { hue: number }) {
-  const rings = [
-    { size: 180, dur: 26, dots: [{ a: 0.2, h: hue }] },
-    { size: 300, dur: 40, dots: [{ a: 1.1, h: hue + 60 }, { a: 3.6, h: hue - 40 }] },
-    { size: 440, dur: 60, dots: [{ a: 2.2, h: hue + 120 }, { a: 5.0, h: hue + 30 }] },
-  ]
+/**
+ * Cinematic Cosmic Solar System for the Hero 1st View:
+ * Features high-definition newly generated Hubble nebula artwork,
+ * centrifugal motion physics, expanding solar wind waves, spiral stardust filaments,
+ * and 5 jewel-like glowing planets with dynamic orbital trails.
+ */
+function CosmicSolarSystem({ hue }: { hue: number }) {
   return (
-    <div aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-      {rings.map((r, i) => (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0 overflow-hidden flex items-center justify-center select-none"
+    >
+      {/* 1. Cinematic Nebula Backdrop (Only in 1st view, matching user reference image) */}
+      <div className="absolute inset-0 overflow-hidden">
         <div
-          key={i}
-          className="absolute rounded-full border"
+          className="animate-cinematic-drift absolute -inset-[10%] h-[120%] w-[120%] bg-cover bg-center opacity-95 filter saturate-125 contrast-105"
           style={{
-            width: r.size,
-            height: r.size,
-            left: -r.size / 2,
-            top: -r.size / 2,
-            borderColor: hsl(hue, 70, 70, 0.12),
-            animation: `spin ${r.dur}s linear infinite`,
+            backgroundImage: "url('/images/nebula-universe.jpg')",
+            transformOrigin: 'center center',
+            maskImage:
+              'radial-gradient(ellipse 96% 88% at 50% 50%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.95) 55%, rgba(0,0,0,0.3) 88%, transparent 100%)',
+            WebkitMaskImage:
+              'radial-gradient(ellipse 96% 88% at 50% 50%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.95) 55%, rgba(0,0,0,0.3) 88%, transparent 100%)',
           }}
-        >
-          {r.dots.map((d, j) => (
-            <span
-              key={j}
-              className="absolute h-3 w-3 rounded-full"
-              style={{
-                left: `calc(50% + ${Math.cos(d.a) * (r.size / 2)}px - 6px)`,
-                top: `calc(50% + ${Math.sin(d.a) * (r.size / 2)}px - 6px)`,
-                background: hsl(d.h, 85, 66),
-                boxShadow: `0 0 14px ${hsl(d.h, 85, 62, 0.9)}`,
-              }}
-            />
-          ))}
-        </div>
-      ))}
+        />
+
+        {/* Deep space contrast veil preserving 100% typography legibility while keeping colors rich */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(circle at 50% 50%, rgba(5,6,11,0.52) 0%, rgba(5,6,11,0.28) 45%, rgba(5,6,11,0.88) 100%)',
+          }}
+        />
+
+        {/* Color-tuned auroral sweeps */}
+        <div
+          className="absolute left-1/2 top-1/2 h-[720px] w-[920px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-45 mix-blend-screen filter blur-[85px]"
+          style={{
+            background: `radial-gradient(circle, ${hsl(hue, 90, 55, 0.75)} 0%, ${hsl(hue + 70, 85, 48, 0.4)} 50%, transparent 75%)`,
+            animation: 'breathe 7s ease-in-out infinite alternate',
+          }}
+        />
+      </div>
+
+      {/* 2. Centrifugal Outward Solar Wind & Expanding Waves */}
+      <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+        {/* Continuous centrifugal expansion waves radiating outward */}
+        <div
+          className="animate-centrifugal-wave absolute h-[300px] w-[300px] rounded-full border border-teal/40"
+          style={{ animationDuration: '6s' }}
+        />
+        <div
+          className="animate-centrifugal-wave absolute h-[300px] w-[300px] rounded-full border border-violet/35"
+          style={{ animationDuration: '6s', animationDelay: '-2s' }}
+        />
+        <div
+          className="animate-centrifugal-wave absolute h-[300px] w-[300px] rounded-full border border-amber-300/30"
+          style={{ animationDuration: '6s', animationDelay: '-4s' }}
+        />
+
+        {/* Centrifugal stardust spiral arms radiating outward */}
+        <div
+          className="animate-centrifugal-spiral absolute h-[760px] w-[760px] rounded-full opacity-35 mix-blend-screen filter blur-[8px]"
+          style={{
+            background: `conic-gradient(from 0deg, transparent 0deg, ${hsl(hue, 85, 65, 0.55)} 55deg, transparent 115deg, ${hsl(hue + 60, 90, 60, 0.45)} 180deg, transparent 240deg, ${hsl(hue - 60, 85, 65, 0.5)} 300deg, transparent 360deg)`,
+          }}
+        />
+      </div>
+
+      {/* 3. Soft Ambient Corona Backlight */}
       <div
-        className="absolute h-10 w-10 rounded-full opacity-70"
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-80 w-80 rounded-full opacity-50 filter blur-[60px]"
         style={{
-          left: -20,
-          top: -20,
-          background: hsl(hue, 85, 66, 0.5),
-          filter: 'blur(6px)',
+          background: `radial-gradient(circle, ${hsl(hue, 95, 65, 0.95)} 0%, rgba(78, 230, 198, 0.65) 40%, transparent 70%)`,
+          animation: 'corona-pulse 5s ease-in-out infinite',
         }}
       />
+
+      {/* 4. 3D Tilted Centrifugal Solar System */}
+      <div
+        className="relative flex items-center justify-center"
+        style={{
+          transform: 'perspective(1400px) rotateX(60deg) rotateZ(-16deg)',
+          transformStyle: 'preserve-3d',
+        }}
+      >
+        {/* Incandescent Central Star / Sun with Corona Flare */}
+        <div
+          className="absolute z-20 flex items-center justify-center"
+          style={{ transform: 'rotateX(-60deg) rotateZ(16deg)' }}
+        >
+          {/* Outer Sun Pulsing Corona */}
+          <div
+            className="absolute h-20 w-20 rounded-full opacity-60 filter blur-[10px]"
+            style={{
+              background: 'radial-gradient(circle, #fde047 0%, #f97316 60%, transparent 85%)',
+              animation: 'ring-pulse 3.5s ease-out infinite',
+            }}
+          />
+          {/* Main Solar Core */}
+          <div
+            className="relative h-12 w-12 rounded-full shadow-2xl"
+            style={{
+              background: 'radial-gradient(circle at 35% 35%, #ffffff 0%, #fef08a 35%, #f59e0b 70%, #d97706 100%)',
+              boxShadow: '0 0 35px rgba(251, 191, 36, 1), 0 0 75px rgba(245, 158, 11, 0.75), 0 0 110px rgba(234, 88, 12, 0.5)',
+            }}
+          />
+        </div>
+
+        {/* --- ORBIT 1: Helios (Inner Swift Planet with Centrifugal Speed) --- */}
+        <div
+          className="absolute rounded-full border border-dashed border-white/20"
+          style={{
+            width: 380,
+            height: 380,
+            animation: 'centrifugal-orbit 9s linear infinite',
+            boxShadow: '0 0 16px rgba(255, 210, 122, 0.15)',
+          }}
+        >
+          <div
+            className="absolute -top-2.5 left-1/2 -translate-x-1/2 flex items-center justify-center"
+            style={{ transform: 'rotateX(-60deg) rotateZ(16deg)' }}
+          >
+            <div
+              className="h-4 w-4 rounded-full shadow-lg"
+              style={{
+                background: 'radial-gradient(circle at 35% 35%, #fff 0%, #ffd27a 40%, #ff8c00 100%)',
+                boxShadow: '0 0 16px rgba(255, 180, 50, 1)',
+              }}
+            />
+            {/* Centrifugal outward trail */}
+            <div
+              className="absolute -left-8 -top-1 h-1.5 w-9 rounded-full opacity-75 filter blur-[1px]"
+              style={{
+                background: 'linear-gradient(90deg, transparent, rgba(255,200,80,0.9))',
+                transform: 'rotate(15deg)',
+              }}
+            />
+          </div>
+        </div>
+
+        {/* --- ORBIT 2: Azure Terra with Orbiting Moon (Centrifugal Orbit) --- */}
+        <div
+          className="absolute rounded-full border border-white/16"
+          style={{
+            width: 580,
+            height: 580,
+            animation: 'centrifugal-orbit 16s linear infinite',
+            boxShadow: '0 0 22px rgba(78, 230, 198, 0.15)',
+          }}
+        >
+          <div
+            className="absolute -top-3.5 left-1/2 -translate-x-1/2 flex items-center justify-center"
+            style={{ transform: 'rotateX(-60deg) rotateZ(16deg)' }}
+          >
+            <div
+              className="h-6 w-6 rounded-full shadow-xl"
+              style={{
+                background: 'radial-gradient(circle at 35% 35%, #e0faff 0%, #22d3ee 45%, #0891b2 85%, #0e374e 100%)',
+                boxShadow: '0 0 24px rgba(34, 211, 238, 0.95)',
+              }}
+            />
+            {/* Orbiting Moon with centrifugal speed */}
+            <div
+              className="absolute h-14 w-14 rounded-full"
+              style={{ animation: 'spin 3s linear infinite' }}
+            >
+              <div
+                className="absolute top-0 left-1/2 -translate-x-1/2 h-2 w-2 rounded-full bg-slate-100 shadow-sm"
+                style={{ boxShadow: '0 0 7px #ffffff' }}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* --- ORBIT 3: Amethyst Prime (Resonance Halo & Centrifugal Drift) --- */}
+        <div
+          className="absolute rounded-full border border-dashed border-white/15"
+          style={{
+            width: 800,
+            height: 800,
+            animation: 'centrifugal-orbit 25s linear infinite',
+            boxShadow: '0 0 25px rgba(139, 123, 255, 0.12)',
+          }}
+        >
+          <div
+            className="absolute -top-4 left-1/2 -translate-x-1/2 flex items-center justify-center"
+            style={{ transform: 'rotateX(-60deg) rotateZ(16deg)' }}
+          >
+            {/* Centrifugal resonance pulse */}
+            <div
+              className="absolute h-16 w-16 rounded-full border border-violet-400/50 animate-ping opacity-40"
+              style={{ animationDuration: '2.8s' }}
+            />
+            <div
+              className="h-7 w-7 rounded-full shadow-2xl"
+              style={{
+                background: 'radial-gradient(circle at 35% 35%, #f5f3ff 0%, #a855f7 40%, #7c3aed 80%, #3b0764 100%)',
+                boxShadow: '0 0 32px rgba(168, 85, 247, 1), 0 0 55px rgba(139, 123, 255, 0.65)',
+              }}
+            />
+          </div>
+        </div>
+
+        {/* --- ORBIT 4: Cronus - Ringed Gas Giant with Moonlets --- */}
+        <div
+          className="absolute rounded-full border border-white/12"
+          style={{
+            width: 1040,
+            height: 1040,
+            animation: 'centrifugal-orbit 38s linear infinite',
+            boxShadow: '0 0 32px rgba(255, 210, 122, 0.1)',
+          }}
+        >
+          <div
+            className="absolute -top-5 left-1/2 -translate-x-1/2 flex items-center justify-center"
+            style={{ transform: 'rotateX(-60deg) rotateZ(16deg)' }}
+          >
+            {/* Tilted Rings */}
+            <div
+              className="absolute h-6 w-20 rounded-full border-[3px] border-amber-200/60"
+              style={{
+                transform: 'rotate(-28deg)',
+                boxShadow: '0 0 14px rgba(251, 191, 36, 0.7), inset 0 0 10px rgba(251, 191, 36, 0.45)',
+              }}
+            />
+            <div
+              className="relative h-9 w-9 rounded-full shadow-2xl"
+              style={{
+                background: 'radial-gradient(circle at 35% 35%, #fef9c3 0%, #f59e0b 40%, #b45309 80%, #78350f 100%)',
+                boxShadow: '0 0 32px rgba(245, 158, 11, 0.9)',
+              }}
+            />
+            {/* Orbiting Moonlet */}
+            <div
+              className="absolute h-24 w-24 rounded-full"
+              style={{ animation: 'spin 4.5s linear infinite' }}
+            >
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 h-2 w-2 rounded-full bg-cyan-200 shadow-sm" />
+            </div>
+          </div>
+        </div>
+
+        {/* --- ORBIT 5: Nebula Comet with Centrifugal Ion Trail --- */}
+        <div
+          className="absolute rounded-full border border-dashed border-white/10"
+          style={{
+            width: 1280,
+            height: 1280,
+            animation: 'centrifugal-orbit 52s linear infinite',
+          }}
+        >
+          <div
+            className="absolute -top-3 left-1/2 -translate-x-1/2 flex items-center justify-center"
+            style={{ transform: 'rotateX(-60deg) rotateZ(16deg)' }}
+          >
+            <div
+              className="h-5 w-5 rounded-full shadow-2xl"
+              style={{
+                background: 'radial-gradient(circle at 35% 35%, #fff 0%, #ec4899 50%, #9d174d 85%, #500724 100%)',
+                boxShadow: '0 0 26px rgba(236, 72, 153, 1)',
+              }}
+            />
+            {/* Curved centrifugal comet tail */}
+            <div
+              className="absolute -left-16 -top-1.5 h-2.5 w-22 rounded-full opacity-75 filter blur-[1px]"
+              style={{
+                background: 'linear-gradient(90deg, transparent, rgba(236,72,153,0.95))',
+                transform: 'rotate(18deg)',
+              }}
+            />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
@@ -85,6 +318,209 @@ const PRIMITIVES = [
   { icon: Star, name: 'Constellations', desc: 'Shapes you draw across your sky to gather the people who belong together.' },
   { icon: Compass, name: 'Drift', desc: 'Wander outward to meet new orbits through the real connections you already have.' },
 ]
+
+const CINEMATIC_VIEWS = [
+  {
+    id: 'nebula',
+    title: 'Hubble Stellar Nebula',
+    tagline: 'Deep space cosmic starburst with centrifugal orbits and living stardust.',
+    subtitle: 'Incandescent celestial clouds, diffraction spikes, and centrifugal planetary trajectories in 8K astrophotography.',
+    badge: 'Hubble & JWST Astrophotography',
+    src: '/images/nebula-universe.jpg',
+    alt: 'Hubble and James Webb style deep space nebula starburst with vibrant magenta and emerald stardust',
+    features: ['Centrifugal Motion Physics', 'Diffraction Stellar Spikes', 'Living Starburst Core'],
+  },
+  {
+    id: 'orbit',
+    title: 'The Living Orbit',
+    tagline: 'You are the sun. Your loved ones orbit around you in real-time.',
+    subtitle: 'Distance is shaped by mutual closeness and conversation warmth — not an engagement algorithm.',
+    badge: 'Spatial Resonance Simulation',
+    src: '/images/cosmic-orbit.jpg',
+    alt: 'Cinematic wide view of human connections orbiting in cosmic starlight',
+    features: ['Mutual Closeness Physics', 'Ephemeral Light Filaments', 'No Scoreboard'],
+  },
+  {
+    id: 'constellations',
+    title: 'Celestial Constellations & Drift',
+    tagline: 'Quiet companionship under a sky of living starlight and genuine connection paths.',
+    subtitle: 'Wander outward to meet friends of friends across luminous aurora filaments and shared rooms.',
+    badge: 'Aurora Connection Matrix',
+    src: '/images/constellations.jpg',
+    alt: 'Silhouettes looking up at vibrant celestial constellation lines across the aurora borealis',
+    features: ['Path-Based Serendipity', 'Decaying Ephemeral Signals', 'Ambient Shared Auras'],
+  },
+]
+
+function CinematicShowcase({ hue }: { hue: number }) {
+  const [activeTab, setActiveTab] = useState(0)
+  const current = CINEMATIC_VIEWS[activeTab]
+
+  return (
+    <section id="vision" className="mx-auto max-w-6xl px-5 py-20">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        className="mx-auto max-w-2xl text-center"
+      >
+        <span className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-3.5 py-1.5 text-xs text-ink-mute backdrop-blur">
+          <Film size={13} className="text-teal" /> Cinematic Vision · Beyond the Screen
+        </span>
+        <h2 className="mt-4 font-display text-4xl font-bold text-ink sm:text-5xl">
+          A living sky, <span className="text-aurora">not a scroll</span>.
+        </h2>
+        <p className="mt-3 text-[15px] leading-relaxed text-ink-mute">
+          Experience how ORBIT re-imagines your social circle into a living, breathing cosmic horizon.
+          Real presence, ethereal motion, and zero algorithm manipulation.
+        </p>
+      </motion.div>
+
+      {/* Main cinematic view frame */}
+      <div className="mt-12 relative overflow-hidden rounded-[32px] border border-white/15 bg-black/60 shadow-2xl backdrop-blur-2xl">
+        {/* Glow tint */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-30"
+          style={{
+            background: `radial-gradient(100% 80% at 50% 10%, ${hsl(hue, 80, 55, 0.4)}, transparent 70%)`,
+          }}
+        />
+
+        {/* View container with continuous subtle cinematic drift */}
+        <div className="relative h-[380px] sm:h-[480px] md:h-[580px] w-full overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.45, ease: 'easeOut' }}
+              className="absolute inset-0 h-full w-full overflow-hidden"
+            >
+              <img
+                src={current.src}
+                alt={current.alt}
+                className="animate-cinematic-drift h-full w-full object-cover object-center select-none filter saturate-110"
+              />
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Vignette gradients for legibility & cinematic depth */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#05060b] via-[#05060b]/30 to-[#05060b]/70" />
+          <div className="pointer-events-none absolute inset-0 bg-radial-gradient from-transparent via-transparent to-[#05060b]/80" />
+
+          {/* Top floating control bar inside viewport */}
+          <div className="absolute inset-x-0 top-0 flex flex-wrap items-center justify-between gap-3 p-5 sm:p-7">
+            {/* View switcher tabs */}
+            <div className="flex items-center gap-1.5 rounded-full border border-white/15 bg-black/50 p-1 backdrop-blur-xl">
+              {CINEMATIC_VIEWS.map((v, i) => (
+                <button
+                  key={v.id}
+                  type="button"
+                  onClick={() => setActiveTab(i)}
+                  className={`inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-medium transition-all ${
+                    activeTab === i
+                      ? 'bg-white/20 text-white shadow-lg shadow-white/5'
+                      : 'text-ink-mute hover:text-ink'
+                  }`}
+                  style={
+                    activeTab === i
+                      ? {
+                          background: hsl(hue, 80, 60, 0.25),
+                          border: `1px solid ${hsl(hue, 80, 70, 0.4)}`,
+                        }
+                      : undefined
+                  }
+                >
+                  <Eye size={13} />
+                  <span>{v.title}</span>
+                </button>
+              ))}
+            </div>
+
+            {/* Ambient status indicator */}
+            <div className="hidden items-center gap-2 rounded-full border border-white/10 bg-black/40 px-3.5 py-1.5 text-[11px] text-ink-mute backdrop-blur-md sm:flex">
+              <span className="h-2 w-2 rounded-full bg-teal animate-pulse" />
+              <span>Real-Time Spatial Simulation</span>
+            </div>
+          </div>
+
+          {/* Bottom cinematic caption & features */}
+          <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10">
+            <motion.div
+              key={current.id + '-caption'}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="max-w-2xl"
+            >
+              <span
+                className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider"
+                style={{
+                  background: hsl(hue, 80, 60, 0.2),
+                  color: hsl(hue, 90, 80),
+                  border: `1px solid ${hsl(hue, 80, 65, 0.3)}`,
+                }}
+              >
+                <Sparkles size={11} /> {current.badge}
+              </span>
+              <h3 className="mt-3 font-display text-2xl font-bold text-white sm:text-3xl">
+                {current.tagline}
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-ink-soft sm:text-[15px]">
+                {current.subtitle}
+              </p>
+
+              {/* Pill feature tags */}
+              <div className="mt-4 flex flex-wrap gap-2">
+                {current.features.map((feat) => (
+                  <span
+                    key={feat}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-xs text-ink-soft backdrop-blur-md"
+                  >
+                    <Layers size={11} className="text-teal" />
+                    {feat}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Thumbnail switcher row underneath the main frame */}
+        <div className="grid grid-cols-1 border-t border-white/10 sm:grid-cols-3">
+          {CINEMATIC_VIEWS.map((v, i) => (
+            <button
+              key={v.id}
+              type="button"
+              onClick={() => setActiveTab(i)}
+              className={`flex items-center gap-4 p-4 text-left transition-all ${
+                activeTab === i
+                  ? 'bg-white/[0.08]'
+                  : 'bg-transparent hover:bg-white/[0.03]'
+              } ${i < CINEMATIC_VIEWS.length - 1 ? 'border-b sm:border-b-0 sm:border-r border-white/10' : ''}`}
+            >
+              <div className="relative h-14 w-20 flex-shrink-0 overflow-hidden rounded-xl border border-white/15">
+                <img src={v.src} alt={v.title} className="h-full w-full object-cover" />
+                {activeTab === i && (
+                  <div
+                    className="absolute inset-0 border-2"
+                    style={{ borderColor: hsl(hue, 85, 65) }}
+                  />
+                )}
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="font-display text-sm font-bold text-ink truncate">{v.title}</p>
+                <p className="text-xs text-ink-mute truncate">{v.badge}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
 
 export function Landing() {
   const navigate = useNavigate()
@@ -106,26 +542,31 @@ export function Landing() {
     <div className="relative z-10">
       {/* ------------------------------------------------------------------ hero */}
       <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-5 text-center">
-        <HeroOrbit hue={hue} />
+        <CosmicSolarSystem hue={hue} />
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="relative"
+          className="relative z-10 mx-auto max-w-4xl py-6 px-4"
         >
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-3.5 py-1.5 text-xs text-ink-mute backdrop-blur">
-            <Sparkles size={13} /> Reimagining social · no feed · no likes · no followers
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/60 px-4 py-1.5 text-xs text-ink-soft shadow-lg backdrop-blur-xl">
+            <Sparkles size={13} className="text-teal" /> Reimagining social · no feed · no likes · no followers
           </span>
 
-          <h1 className="mt-7 font-display text-[19vw] font-bold leading-[0.85] tracking-tight text-aurora sm:text-[10rem]">
+          <h1
+            className="mt-6 font-display text-[19vw] font-bold leading-[0.85] tracking-tight text-aurora sm:text-[10rem]"
+            style={{
+              filter: 'drop-shadow(0 0 40px rgba(78, 230, 198, 0.5)) drop-shadow(0 0 85px rgba(139, 123, 255, 0.4))',
+            }}
+          >
             ORBIT
           </h1>
 
-          <p className="mx-auto mt-2 max-w-xl font-display text-xl font-medium text-ink sm:text-2xl">
+          <p className="mx-auto mt-3 max-w-xl font-display text-xl font-medium text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)] sm:text-2xl">
             Your social universe, not your feed.
           </p>
-          <p className="mx-auto mt-3 max-w-lg text-[15px] leading-relaxed text-ink-mute">
+          <p className="mx-auto mt-3 max-w-lg text-[15px] leading-relaxed text-ink-soft drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
             The people you care about orbit you — pulled close by real connection, never by
             a follower count. Presence over performance.
           </p>
@@ -142,6 +583,9 @@ export function Landing() {
             >
               Launch Orbit Live <ArrowRight size={18} />
             </Button>
+            <Button variant="glass" size="lg" onClick={() => scrollTo('vision')}>
+              <Film size={16} className="text-teal" /> Cinematic Vision
+            </Button>
             <Button variant="glass" size="lg" onClick={() => scrollTo('enter')}>
               Customize Star
             </Button>
@@ -152,15 +596,18 @@ export function Landing() {
         </motion.div>
 
         <motion.button
-          onClick={() => scrollTo('why')}
+          onClick={() => scrollTo('vision')}
           className="absolute bottom-8 text-ink-faint"
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          aria-label="Scroll down"
+          aria-label="Scroll down to vision"
         >
           <ChevronDown size={26} />
         </motion.button>
       </section>
+
+      {/* --------------------------------------------------- cinematic vision showcase */}
+      <CinematicShowcase hue={hue} />
 
       {/* ------------------------------------------------------------- manifesto */}
       <section id="why" className="mx-auto max-w-6xl px-5 py-24">

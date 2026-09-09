@@ -43,7 +43,10 @@ export function SignalCard({ signal, showAuthor, className }: SignalCardProps) {
   const Icon = meta.icon
 
   return (
-    <div
+    <article
+      role="article"
+      aria-label={`Signal by ${author?.name ?? 'User'}`}
+      data-feature="post"
       className={cn(
         'group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-colors hover:border-white/20',
         className,
@@ -78,6 +81,8 @@ export function SignalCard({ signal, showAuthor, className }: SignalCardProps) {
             </span>
             <button
               type="button"
+              aria-label={signal.resonated ? 'Already resonated' : 'Resonate with signal'}
+              data-feature="interactive-engagement"
               onClick={() => resonateSignal(signal.id)}
               className={cn(
                 'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs transition-all',
@@ -128,6 +133,6 @@ export function SignalCard({ signal, showAuthor, className }: SignalCardProps) {
           </div>
         </div>
       </div>
-    </div>
+    </article>
   )
 }

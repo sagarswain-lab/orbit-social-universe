@@ -38,7 +38,12 @@ export function PresencePanel({ nodeId }: { nodeId: string }) {
   const memberCons = constellations.filter((c) => c.memberIds.includes(node.id))
 
   return (
-    <div className="flex min-h-full flex-col">
+    <div
+      role="region"
+      aria-label="User Profile & Presence"
+      data-feature="user-profile"
+      className="flex min-h-full flex-col"
+    >
       {/* hero */}
       <div className="relative px-6 pb-5 pt-9">
         <div

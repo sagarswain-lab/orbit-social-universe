@@ -32,7 +32,7 @@ export function BottomNav({ onPulseClick }: BottomNavProps = {}) {
 
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center p-3 md:hidden">
-      <nav className="glass-strong pointer-events-auto flex w-full max-w-md items-center gap-1 rounded-full px-3 py-2">
+      <nav aria-label="Main navigation" data-feature="navigation" className="glass-strong pointer-events-auto flex w-full max-w-md items-center gap-1 rounded-full px-3 py-2">
         <button className={item(mode === 'universe')} onClick={() => setMode('universe')}>
           <Orbit size={20} />
           Universe

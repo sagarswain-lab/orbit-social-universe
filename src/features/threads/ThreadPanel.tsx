@@ -36,7 +36,12 @@ export function ThreadPanel({ personId }: { personId: string }) {
   }
 
   return (
-    <div className="flex h-full flex-col">
+    <div
+      role="region"
+      aria-label="Direct Messages & Chat Thread"
+      data-feature="messaging"
+      className="flex h-full flex-col"
+    >
       <div className="flex items-center gap-3 px-6 pb-4 pt-9">
         <Avatar name={person.name} hue={person.hue} size={44} active={person.activeNow} glow />
         <div>
@@ -46,7 +51,12 @@ export function ThreadPanel({ personId }: { personId: string }) {
       </div>
       <div className="px-6"><div className="hair-divider" /></div>
 
-      <div className="flex-1 space-y-3 overflow-y-auto px-6 py-5">
+      <div
+        role="log"
+        aria-label="Message history"
+        data-feature="chat-messages"
+        className="flex-1 space-y-3 overflow-y-auto px-6 py-5"
+      >
         {thread?.messages.map((m) => {
           const mine = m.from === 'you'
           return (

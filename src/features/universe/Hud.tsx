@@ -26,7 +26,11 @@ export function Hud({ onPulseClick }: HudProps = {}) {
 
   return (
     <>
-      <div className="pointer-events-none fixed inset-x-0 top-0 z-40 flex items-start justify-between gap-3 p-4 sm:p-5">
+      <header
+        role="banner"
+        aria-label="ORBIT app header"
+        className="pointer-events-none fixed inset-x-0 top-0 z-40 flex items-start justify-between gap-3 p-4 sm:p-5"
+      >
         {/* brand + aura */}
         <div className="pointer-events-auto flex items-center gap-3">
           <div className="glass flex items-center gap-2.5 rounded-full py-1.5 pl-2 pr-3.5">
@@ -81,7 +85,7 @@ export function Hud({ onPulseClick }: HudProps = {}) {
             <Compass size={16} /> Drift
           </Button>
         </div>
-      </div>
+      </header>
 
       {/* lens toggle for tablet/mobile sits just under brand */}
       <div className="pointer-events-none fixed inset-x-0 top-[68px] z-40 flex justify-center px-4 md:hidden">

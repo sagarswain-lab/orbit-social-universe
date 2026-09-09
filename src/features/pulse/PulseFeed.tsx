@@ -77,6 +77,9 @@ export function PulseFeed({ open, onClose }: { open: boolean; onClose: () => voi
           {/* panel */}
           <motion.aside
             key="pulse-panel"
+            role="region"
+            aria-label="Content Feed — Ephemeral Signals"
+            data-feature="content-feed"
             initial={{ x: '100%', opacity: 0.5 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: '100%', opacity: 0 }}

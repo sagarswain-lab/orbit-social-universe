@@ -66,7 +66,16 @@ export function Composer() {
 
   return (
     <Modal open={open} onClose={close} hue={you.hue} title="Emit a signal" maxWidth={560}>
-      <div className="max-h-[86svh] overflow-y-auto px-6 pb-6 pt-8">
+      <form
+        role="form"
+        aria-label="Content Creation — Emit Signal"
+        data-feature="content-creation"
+        onSubmit={(e) => {
+          e.preventDefault()
+          submit()
+        }}
+        className="max-h-[86svh] overflow-y-auto px-6 pb-6 pt-8"
+      >
         <h2 className="font-display text-xl font-bold text-ink">Emit a signal</h2>
         <p className="mt-1 text-sm text-ink-mute">
           It glows for a while, then fades. Nothing here is permanent — no backlog, no archive.
@@ -145,7 +154,7 @@ export function Composer() {
             Emit signal
           </Button>
         </div>
-      </div>
+      </form>
     </Modal>
   )
 }

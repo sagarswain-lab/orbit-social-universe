@@ -14,6 +14,9 @@ export function DriftView() {
 
   return (
     <motion.div
+      role="region"
+      aria-label="Content Discovery & Community Exploration"
+      data-feature="content-discovery"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}

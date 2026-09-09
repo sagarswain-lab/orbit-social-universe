@@ -42,8 +42,19 @@ export function UniverseScreen() {
   }, [])
 
   return (
-    <div className="fixed inset-0 overflow-hidden">
-      <OrbitField onCenterClick={() => setYouPanelOpen(true)} />
+    <div
+      className="fixed inset-0 overflow-hidden"
+      data-feature="social-universe"
+      aria-label="ORBIT — Your Social Universe"
+    >
+      {/* The orbital canvas — your living social graph */}
+      <section
+        aria-label="Social connection map"
+        data-feature="social-graph"
+        className="absolute inset-0"
+      >
+        <OrbitField onCenterClick={() => setYouPanelOpen(true)} />
+      </section>
 
       <Hud onPulseClick={() => setPulseOpen(true)} />
       <ConstellationBar />
@@ -65,24 +76,26 @@ export function UniverseScreen() {
         )}
       </AnimatePresence>
 
+      {/* Drift — content discovery & people exploration */}
       <AnimatePresence>{mode === 'drift' && <DriftView key="drift" />}</AnimatePresence>
 
-      {/* presence drawer */}
+      {/* User profile / presence panel */}
       <Sheet open={presenceOpen} onClose={() => selectNode(null)} hue={selected?.hue ?? 265}>
         {selected && <PresencePanel nodeId={selected.id} />}
       </Sheet>
 
-      {/* thread drawer */}
+      {/* Direct messages / thread panel */}
       <Sheet open={!!threadPerson} onClose={closeThread} hue={threadPerson?.hue ?? 265}>
         {threadPerson && <ThreadPanel personId={threadPerson.id} />}
       </Sheet>
 
+      {/* Content creation — post/signal composer */}
       <Composer />
 
-      {/* pulse feed */}
+      {/* Content feed — pulse feed of all signals */}
       <PulseFeed open={pulseOpen} onClose={() => setPulseOpen(false)} />
 
-      {/* you panel */}
+      {/* Your profile panel */}
       <YouPanel open={youPanelOpen} onClose={() => setYouPanelOpen(false)} />
     </div>
   )

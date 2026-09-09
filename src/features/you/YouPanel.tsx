@@ -60,6 +60,9 @@ export function YouPanel({ open, onClose }: { open: boolean; onClose: () => void
           />
           <motion.aside
             key="you-panel"
+            role="complementary"
+            aria-label="Your profile"
+            data-feature="user-profile"
             initial={{ y: '100%', opacity: 0.6 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: '100%', opacity: 0 }}

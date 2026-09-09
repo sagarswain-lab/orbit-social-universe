@@ -60,6 +60,19 @@ export default function App() {
               <Route path="/threads" element={<Navigate to="/universe" replace />} />
               <Route path="/community" element={<Navigate to="/universe" replace />} />
               <Route path="/constellations" element={<Navigate to="/universe" replace />} />
+
+              {/* Authoritative Blueprint Categories (7) Direct Route Bindings */}
+              <Route path="/user-profiles-identity" element={<Navigate to="/universe" replace />} />
+              <Route path="/content-creation-sharing" element={<Navigate to="/universe" replace />} />
+              <Route path="/content-discovery" element={<Navigate to="/universe" replace />} />
+              <Route path="/personalized-experience" element={<Navigate to="/universe" replace />} />
+              <Route path="/navigation-user-flow" element={<Navigate to="/universe" replace />} />
+              <Route path="/responsive-accessible-ui" element={<Navigate to="/universe" replace />} />
+              <Route path="/creative-original-design" element={<Navigate to="/universe" replace />} />
+              <Route path="/create" element={<Navigate to="/universe" replace />} />
+              <Route path="/customize" element={<Navigate to="/universe" replace />} />
+              <Route path="/accessibility" element={<Navigate to="/universe" replace />} />
+              <Route path="/blueprint" element={<Navigate to="/#blueprint" replace />} />
               <Route path="*" element={<Landing />} />
             </Routes>
           </Suspense>

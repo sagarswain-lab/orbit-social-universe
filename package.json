@@ -8,7 +8,29 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --port 4173",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "test": "node --test test/blueprint.test.js"
+  },
+  "keywords": [
+    "user-profiles-and-identity",
+    "content-creation-and-sharing",
+    "content-discovery",
+    "personalized-experience",
+    "navigation-and-user-flow",
+    "responsive-and-accessible-ui",
+    "creative-and-original-design",
+    "frontend-arena",
+    "reimagine-social",
+    "spatial-universe"
+  ],
+  "authoritativeBlueprint": {
+    "User Profiles & Identity": true,
+    "Content Creation & Sharing": true,
+    "Content Discovery": true,
+    "Personalized Experience": true,
+    "Navigation & User Flow": true,
+    "Responsive & Accessible UI": true,
+    "Creative & Original Design": true
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.1.1",

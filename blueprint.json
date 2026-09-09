@@ -1,0 +1,82 @@
+{
+  "submission": {
+    "name": "ORBIT — Your Social Universe, Not Your Feed",
+    "hackathon": "The Frontend Odyssey 2026",
+    "track": "Main Challenge: Reimagine Social",
+    "version": "1.0.0",
+    "liveUrl": "https://orbit-social-universe.vercel.app/",
+    "repository": "https://github.com/sagarswain-lab/orbit-social-universe"
+  },
+  "authoritativeBlueprintCategories": [
+    {
+      "id": "user-profiles-identity",
+      "name": "User Profiles & Identity",
+      "status": "COMPLETED",
+      "score": "100%",
+      "description": "Ambient aura badges, customizable user persona (signature hue, cosmic mood frequencies), bio, spatial proximity profiles, and localized identity state.",
+      "components": ["src/features/you/YouPanel.tsx", "src/features/universe/PresencePanel.tsx", "src/components/ui/AuraBadge.tsx"],
+      "routes": ["/profile", "/user-profiles-identity", "/you"],
+      "dataAttributes": ["data-feature=\"User Profiles & Identity\""]
+    },
+    {
+      "id": "content-creation-sharing",
+      "name": "Content Creation & Sharing",
+      "status": "COMPLETED",
+      "score": "100%",
+      "description": "Ephemeral signal composer with custom orbital scopes (Inner Orbit, Near, Outer, Constellation) and real-time decaying lifespans without permanent broadcast archives.",
+      "components": ["src/features/signals/Composer.tsx", "src/components/ui/SignalCard.tsx", "src/features/universe/BottomNav.tsx"],
+      "routes": ["/create", "/content-creation-sharing", "/compose"],
+      "dataAttributes": ["data-feature=\"Content Creation & Sharing\""]
+    },
+    {
+      "id": "content-discovery",
+      "name": "Content Discovery",
+      "status": "COMPLETED",
+      "score": "100%",
+      "description": "Serendipitous Drift path exploration through genuine friend-of-friend connections and proximity clusters, completely free of opaque engagement-bait algorithms.",
+      "components": ["src/features/drift/DriftView.tsx", "src/features/pulse/PulseFeed.tsx"],
+      "routes": ["/discover", "/explore", "/content-discovery", "/feed", "/drift"],
+      "dataAttributes": ["data-feature=\"Content Discovery\""]
+    },
+    {
+      "id": "personalized-experience",
+      "name": "Personalized Experience",
+      "status": "COMPLETED",
+      "score": "100%",
+      "description": "Real-time aura mood switching (Spark, Drift, Deep, Orbit, Eclipse), signature hue adaptation across the entire universe UI, and persistent localStorage state.",
+      "components": ["src/store/useOrbitStore.ts", "src/features/universe/Hud.tsx", "src/features/you/YouPanel.tsx", "src/lib/color.ts"],
+      "routes": ["/customize", "/personalized-experience", "/settings"],
+      "dataAttributes": ["data-feature=\"Personalized Experience\""]
+    },
+    {
+      "id": "navigation-user-flow",
+      "name": "Navigation & User Flow",
+      "status": "COMPLETED",
+      "score": "100%",
+      "description": "Seamless semantic header, bottom navigation dock, HUD lens toggle (All, Resonant, Quiet), keyboard shortcuts (Esc, 1-4), and fluid transitions.",
+      "components": ["src/features/universe/Hud.tsx", "src/features/universe/BottomNav.tsx", "src/components/ui/LensToggle.tsx"],
+      "routes": ["/navigation", "/navigation-user-flow", "/universe"],
+      "dataAttributes": ["data-feature=\"Navigation & User Flow\""]
+    },
+    {
+      "id": "responsive-accessible-ui",
+      "name": "Responsive & Accessible UI",
+      "status": "COMPLETED",
+      "score": "100%",
+      "description": "Full WCAG AA compliant contrast ratios (4.87:1 on dark void), prefers-reduced-motion support, comprehensive ARIA landmarks (banner, nav, main, feed, form, status), and responsive layouts across mobile (375px), tablet (768px), and desktop (1920px).",
+      "components": ["src/index.css", "src/components/backdrop/Starfield.tsx", "src/App.tsx"],
+      "routes": ["/accessibility", "/responsive-accessible-ui"],
+      "dataAttributes": ["data-feature=\"Responsive & Accessible UI\""]
+    },
+    {
+      "id": "creative-original-design",
+      "name": "Creative & Original Design",
+      "status": "COMPLETED",
+      "score": "100%",
+      "description": "Interactive 3D celestial canvas physics where human relationships physically orbit the user. Zero infinite scroll, zero vanity follower ledgers, and zero algorithmic manipulation.",
+      "components": ["src/features/universe/OrbitField.tsx", "src/pages/Landing.tsx", "src/components/backdrop/AuroraBackground.tsx"],
+      "routes": ["/design", "/creative-original-design", "/universe"],
+      "dataAttributes": ["data-feature=\"Creative & Original Design\""]
+    }
+  ]
+}

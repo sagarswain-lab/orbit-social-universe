@@ -70,8 +70,8 @@ const ASTEROIDS = [
   { top: '62%', left: '98%', delay: '7s',  dur: '18s', size: 3 },
 ]
 
-// ─── DEEP STARS ──────────────────────────────────────────────────────────────
-const DEEP_STARS = Array.from({ length: 60 }, (_, i) => ({
+// ─── DEEP STARS (24 max — keep DOM lean for PageSpeed) ─────────────────────
+const DEEP_STARS = Array.from({ length: 24 }, (_, i) => ({
   top:   `${Math.round(3  + ((i * 137.5) % 94))}%`,
   left:  `${Math.round(1  + ((i * 97.3)  % 98))}%`,
   size:  (i % 4 === 0) ? 2 : 1,
@@ -303,7 +303,7 @@ function CosmicSolarSystem({ hue }: { hue: number }) {
         <div
           className="animate-cinematic-drift absolute -inset-[10%] h-[120%] w-[120%] bg-cover bg-center opacity-95 filter saturate-125 contrast-105"
           style={{
-            backgroundImage: "url('/images/nebula-universe.jpg')",
+            backgroundImage: "url('/images/nebula-universe.webp')",
             transformOrigin: 'center center',
             maskImage:
               'radial-gradient(ellipse 96% 88% at 50% 50%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.95) 55%, rgba(0,0,0,0.3) 88%, transparent 100%)',
@@ -587,7 +587,8 @@ const CINEMATIC_VIEWS = [
     tagline: 'Deep space cosmic starburst with centrifugal orbits and living stardust.',
     subtitle: 'Incandescent celestial clouds, diffraction spikes, and centrifugal planetary trajectories in 8K astrophotography.',
     badge: 'Hubble & JWST Astrophotography',
-    src: '/images/nebula-universe.jpg',
+    src: '/images/nebula-universe.webp',
+    thumb: '/images/nebula-universe.webp',
     alt: 'Hubble and James Webb style deep space nebula starburst with vibrant magenta and emerald stardust',
     features: ['Centrifugal Motion Physics', 'Diffraction Stellar Spikes', 'Living Starburst Core'],
   },
@@ -597,7 +598,8 @@ const CINEMATIC_VIEWS = [
     tagline: 'You are the sun. Your loved ones orbit around you in real-time.',
     subtitle: 'Distance is shaped by mutual closeness and conversation warmth — not an engagement algorithm.',
     badge: 'Spatial Resonance Simulation',
-    src: '/images/cosmic-orbit.jpg',
+    src: '/images/cosmic-orbit.webp',
+    thumb: '/images/cosmic-orbit-thumb.webp',
     alt: 'Cinematic wide view of human connections orbiting in cosmic starlight',
     features: ['Mutual Closeness Physics', 'Ephemeral Light Filaments', 'No Scoreboard'],
   },
@@ -607,7 +609,8 @@ const CINEMATIC_VIEWS = [
     tagline: 'Quiet companionship under a sky of living starlight and genuine connection paths.',
     subtitle: 'Wander outward to meet friends of friends across luminous aurora filaments and shared rooms.',
     badge: 'Aurora Connection Matrix',
-    src: '/images/constellations.jpg',
+    src: '/images/constellations.webp',
+    thumb: '/images/constellations-thumb.webp',
     alt: 'Silhouettes looking up at vibrant celestial constellation lines across the aurora borealis',
     features: ['Path-Based Serendipity', 'Decaying Ephemeral Signals', 'Ambient Shared Auras'],
   },
@@ -662,6 +665,10 @@ function CinematicShowcase({ hue }: { hue: number }) {
               <img
                 src={current.src}
                 alt={current.alt}
+                width={1920}
+                height={1080}
+                loading="lazy"
+                decoding="async"
                 className="animate-cinematic-drift h-full w-full object-cover object-center select-none filter saturate-110"
               />
             </motion.div>
@@ -763,7 +770,7 @@ function CinematicShowcase({ hue }: { hue: number }) {
               } ${i < CINEMATIC_VIEWS.length - 1 ? 'border-b sm:border-b-0 sm:border-r border-white/10' : ''}`}
             >
               <div className="relative h-14 w-20 flex-shrink-0 overflow-hidden rounded-xl border border-white/15">
-                <img src={v.src} alt={v.title} className="h-full w-full object-cover" />
+                <img src={v.thumb} alt={v.title} width={80} height={56} loading="lazy" decoding="async" className="h-full w-full object-cover" />
                 {activeTab === i && (
                   <div
                     className="absolute inset-0 border-2"

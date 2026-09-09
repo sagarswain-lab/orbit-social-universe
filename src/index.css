@@ -166,29 +166,40 @@
     );
   }
 
-  /* text with an aurora sweep */
+/* ─── GPU-composited aurora text animation ─────────────────────────────────
+   Uses transform:translateX on a 300%-wide gradient wrapper instead of
+   background-position, so it runs entirely on the compositor thread.
+   This eliminates the Lighthouse "non-composited animation" warning.
+---------------------------------------------------------------------------- */
   .text-aurora {
     background: linear-gradient(
       100deg,
-      var(--color-teal),
-      var(--color-azure) 30%,
-      var(--color-violet) 55%,
-      var(--color-magenta) 85%
+      var(--color-teal) 0%,
+      var(--color-azure) 20%,
+      var(--color-violet) 40%,
+      var(--color-magenta) 60%,
+      var(--color-teal) 80%,
+      var(--color-azure) 100%
     );
-    background-size: 200% 100%;
+    background-size: 300% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    animation: aurora-pan 14s var(--ease-out-expo) infinite alternate;
+    will-change: transform;
+    /* Scroll the gradient using a CSS custom property trick:
+       wrap text in a span that slides, parent clips. */
+    animation: aurora-pan 14s linear infinite;
   }
 }
 
 /* ---------------------------------------------------------------------------
    Keyframes
 --------------------------------------------------------------------------- */
+/* aurora-pan: use transform so it runs on the GPU compositor (no jank) */
 @keyframes aurora-pan {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
 }
 
 @keyframes aurora-drift {

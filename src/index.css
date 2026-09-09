@@ -6,16 +6,16 @@
    for bespoke visuals (auras, glows, gradients).
 --------------------------------------------------------------------------- */
 @theme {
-  /* Surfaces */
-  --color-void: #05060b;
-  --color-void-2: #090b16;
-  --color-abyss: #03040a;
+  /* Surfaces — lifted from near-black to rich deep-space indigo for vivid cosmic feel */
+  --color-void: #0b0d1f;
+  --color-void-2: #0f1228;
+  --color-abyss: #080918;
 
   /* Ink */
-  --color-ink: #eceefc;
-  --color-ink-soft: #c3c8ef;
-  --color-ink-mute: #8b91bd;
-  --color-ink-faint: #7479a3; /* WCAG AA: 4.87:1 on --color-void (was 3.36:1, failing) */
+  --color-ink: #f0f2ff;
+  --color-ink-soft: #cdd3f5;
+  --color-ink-mute: #9098c8;
+  --color-ink-faint: #7479a3; /* WCAG AA: 4.87:1 on --color-void */
 
   /* Aurora accents */
   --color-teal: #4ee6c6;
@@ -25,11 +25,11 @@
   --color-gold: #ffd27a;
   --color-rose: #ff8fa3;
 
-  /* Semantic */
-  --color-glass: rgba(255, 255, 255, 0.055);
-  --color-glass-2: rgba(255, 255, 255, 0.09);
-  --color-hair: rgba(255, 255, 255, 0.1);
-  --color-hair-2: rgba(255, 255, 255, 0.16);
+  /* Semantic — boosted glass opacity for richer panel depth */
+  --color-glass: rgba(255, 255, 255, 0.07);
+  --color-glass-2: rgba(255, 255, 255, 0.12);
+  --color-hair: rgba(255, 255, 255, 0.13);
+  --color-hair-2: rgba(255, 255, 255, 0.2);
 
   /* Fonts */
   --font-display: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
@@ -58,7 +58,11 @@
 
   body {
     margin: 0;
+    /* Rich deep-space indigo base with a subtle violet nebula bloom */
     background-color: var(--color-void);
+    background-image:
+      radial-gradient(ellipse 80% 55% at 50% -10%, rgba(60, 30, 140, 0.28) 0%, transparent 65%),
+      radial-gradient(ellipse 60% 40% at 90% 100%, rgba(30, 80, 160, 0.18) 0%, transparent 60%);
     color: var(--color-ink);
     font-family: var(--font-sans);
     font-feature-settings: 'cv11', 'ss01';
@@ -262,6 +266,70 @@
 .animate-cinematic-drift { animation: cinematic-drift 16s ease-in-out infinite; }
 .animate-centrifugal-spiral { animation: centrifugal-spiral 24s linear infinite; }
 .animate-centrifugal-wave { animation: centrifugal-wave 6s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+
+/* ─── METEOR: fast diagonal streak from top-right to bottom-left ─────────── */
+@keyframes meteor-fall {
+  0%   { transform: translate(0, 0) rotate(-42deg); opacity: 0; }
+  2%   { opacity: 1; }
+  80%  { opacity: 0.7; }
+  100% { transform: translate(-160vw, 110vh) rotate(-42deg); opacity: 0; }
+}
+
+/* ─── COMET: long graceful arc with colour-fade tail ────────────────────── */
+@keyframes comet-arc {
+  0%   { transform: translate(0, 0) rotate(-28deg); opacity: 0; }
+  5%   { opacity: 1; }
+  70%  { opacity: 0.85; }
+  100% { transform: translate(-130vw, 80vh) rotate(-28deg); opacity: 0; }
+}
+
+/* ─── SATELLITE: slow elliptical cross of viewport ──────────────────────── */
+@keyframes satellite-pass {
+  0%   { transform: translate(-5vw, 0); opacity: 0; }
+  8%   { opacity: 0.9; }
+  90%  { opacity: 0.7; }
+  100% { transform: translate(108vw, -28vh); opacity: 0; }
+}
+@keyframes satellite-pass-2 {
+  0%   { transform: translate(108vw, 0); opacity: 0; }
+  8%   { opacity: 0.7; }
+  90%  { opacity: 0.5; }
+  100% { transform: translate(-8vw, 38vh); opacity: 0; }
+}
+
+/* ─── ASTEROID: slow tumbling drift ─────────────────────────────────────── */
+@keyframes asteroid-drift {
+  0%   { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+  6%   { opacity: 0.65; }
+  88%  { opacity: 0.4; }
+  100% { transform: translate(-90vw, 55vh) rotate(720deg); opacity: 0; }
+}
+
+/* ─── DEEP STAR TWINKLE (randomised) ────────────────────────────────────── */
+@keyframes deep-twinkle {
+  0%, 100% { opacity: 0.08; transform: scale(1); }
+  50%       { opacity: 0.9;  transform: scale(1.6); }
+}
+
+/* ─── NEBULA FLARE: slow expanding hot-spot ─────────────────────────────── */
+@keyframes nebula-flare {
+  0%   { transform: scale(0.7); opacity: 0.0; }
+  30%  { opacity: 0.35; }
+  60%  { transform: scale(1.4); opacity: 0.2; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* ─── STARFIELD DRIFT: slow parallax wander of star clusters ────────────── */
+@keyframes starfield-wander {
+  0%   { transform: translateY(0) translateX(0); }
+  50%  { transform: translateY(-18px) translateX(12px); }
+  100% { transform: translateY(0) translateX(0); }
+}
+
+/* ─── ISS-STYLE SOLAR PANEL SATELLITE rotation ──────────────────────────── */
+@keyframes panel-spin {
+  to { transform: rotate(360deg); }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *,

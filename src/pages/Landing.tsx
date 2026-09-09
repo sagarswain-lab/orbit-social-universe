@@ -32,6 +32,260 @@ import { useOrbitStore } from '@/store/useOrbitStore'
 
 const HUES = [265, 200, 172, 328, 40, 300, 150, 222]
 
+// ─── METEOR DATA ─────────────────────────────────────────────────────────────
+const METEORS = [
+  { top: '3%',  left: '92%', delay: '0s',    dur: '1.8s', len: 120, color: '#ffffff' },
+  { top: '8%',  left: '75%', delay: '3.2s',  dur: '2.2s', len: 90,  color: '#c8d8ff' },
+  { top: '15%', left: '88%', delay: '6.1s',  dur: '1.5s', len: 150, color: '#ffffff' },
+  { top: '2%',  left: '60%', delay: '9.4s',  dur: '2.0s', len: 100, color: '#aaddff' },
+  { top: '20%', left: '95%', delay: '12.0s', dur: '1.7s', len: 80,  color: '#ffe8c0' },
+  { top: '5%',  left: '82%', delay: '14.5s', dur: '2.5s', len: 110, color: '#ffffff' },
+  { top: '1%',  left: '70%', delay: '17.1s', dur: '1.6s', len: 130, color: '#ddccff' },
+  { top: '12%', left: '98%', delay: '19.8s', dur: '2.1s', len: 95,  color: '#c8d8ff' },
+  { top: '7%',  left: '55%', delay: '22.3s', dur: '1.9s', len: 140, color: '#ffffff' },
+  { top: '18%', left: '80%', delay: '25.0s', dur: '2.3s', len: 85,  color: '#aaffee' },
+  { top: '4%',  left: '67%', delay: '27.6s', dur: '1.4s', len: 105, color: '#ffe0a0' },
+  { top: '10%', left: '90%', delay: '30.2s', dur: '2.0s', len: 120, color: '#ffffff' },
+]
+
+// ─── COMET DATA ──────────────────────────────────────────────────────────────
+const COMETS = [
+  { top: '5%',  left: '99%', delay: '4s',  dur: '9s',  len: 260, color1: '#78e8ff', color2: '#8b7bff' },
+  { top: '28%', left: '99%', delay: '18s', dur: '11s', len: 320, color1: '#ffd27a', color2: '#ff6ad5' },
+  { top: '12%', left: '99%', delay: '33s', dur: '8s',  len: 200, color1: '#4ee6c6', color2: '#5aa2ff' },
+]
+
+// ─── SATELLITE DATA (ISS-style) ───────────────────────────────────────────────
+const SATELLITES = [
+  { top: '22%', delay: '2s',  dur: '28s', anim: 'satellite-pass',   size: 6,  panelColor: '#90d0ff' },
+  { top: '58%', delay: '14s', dur: '36s', anim: 'satellite-pass-2', size: 5,  panelColor: '#ffd27a' },
+  { top: '38%', delay: '8s',  dur: '45s', anim: 'satellite-pass',   size: 4,  panelColor: '#4ee6c6' },
+]
+
+// ─── ASTEROID DATA ───────────────────────────────────────────────────────────
+const ASTEROIDS = [
+  { top: '30%', left: '96%', delay: '1s',  dur: '22s', size: 4 },
+  { top: '48%', left: '92%', delay: '11s', dur: '30s', size: 3 },
+  { top: '16%', left: '88%', delay: '21s', dur: '26s', size: 5 },
+  { top: '62%', left: '98%', delay: '7s',  dur: '18s', size: 3 },
+]
+
+// ─── DEEP STARS ──────────────────────────────────────────────────────────────
+const DEEP_STARS = Array.from({ length: 60 }, (_, i) => ({
+  top:   `${Math.round(3  + ((i * 137.5) % 94))}%`,
+  left:  `${Math.round(1  + ((i * 97.3)  % 98))}%`,
+  size:  (i % 4 === 0) ? 2 : 1,
+  delay: `${((i * 0.77) % 8).toFixed(1)}s`,
+  dur:   `${(2.5 + (i % 5) * 1.2).toFixed(1)}s`,
+  opacity: 0.4 + (i % 5) * 0.12,
+}))
+
+// ─── NEBULA FLARES ───────────────────────────────────────────────────────────
+const NEBULA_FLARES = [
+  { top: '15%', left: '20%', delay: '0s',  dur: '12s', color: 'rgba(139,123,255,0.5)', size: 180 },
+  { top: '65%', left: '75%', delay: '7s',  dur: '15s', color: 'rgba(78,230,198,0.45)', size: 140 },
+  { top: '40%', left: '50%', delay: '14s', dur: '10s', color: 'rgba(255,106,213,0.4)', size: 120 },
+]
+
+/**
+ * Deep-space particle layer: meteors, comets, satellites, asteroids, stars, flares.
+ * Pure CSS animations — zero JS computation at runtime.
+ */
+function CosmicParticles() {
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden select-none z-[1]">
+
+      {/* ── DEEP TWINKLING STARFIELD ── */}
+      {DEEP_STARS.map((s, i) => (
+        <div
+          key={`star-${i}`}
+          className="absolute rounded-full bg-white"
+          style={{
+            top: s.top, left: s.left,
+            width: s.size, height: s.size,
+            animation: `deep-twinkle ${s.dur} ${s.delay} ease-in-out infinite`,
+            opacity: s.opacity,
+            boxShadow: s.size > 1 ? '0 0 4px 1px rgba(255,255,255,0.6)' : undefined,
+          }}
+        />
+      ))}
+
+      {/* ── NEBULA HOT-SPOT FLARES ── */}
+      {NEBULA_FLARES.map((f, i) => (
+        <div
+          key={`flare-${i}`}
+          className="absolute rounded-full filter blur-2xl mix-blend-screen"
+          style={{
+            top: f.top, left: f.left,
+            width: f.size, height: f.size,
+            background: `radial-gradient(circle, ${f.color} 0%, transparent 70%)`,
+            animation: `nebula-flare ${f.dur} ${f.delay} ease-in-out infinite`,
+            opacity: 0,
+          }}
+        />
+      ))}
+
+      {/* ── METEORS ── */}
+      {METEORS.map((m, i) => (
+        <div
+          key={`meteor-${i}`}
+          className="absolute"
+          style={{
+            top: m.top, left: m.left,
+            animation: `meteor-fall ${m.dur} ${m.delay} linear infinite`,
+            opacity: 0,
+          }}
+        >
+          {/* Glowing head */}
+          <div
+            className="absolute rounded-full"
+            style={{
+              width: 3, height: 3,
+              background: m.color,
+              boxShadow: `0 0 6px 3px ${m.color}`,
+              top: 0, left: m.len - 3,
+            }}
+          />
+          {/* Fading trail */}
+          <div
+            style={{
+              width: m.len, height: 1.5,
+              background: `linear-gradient(90deg, transparent 0%, ${m.color}55 40%, ${m.color} 100%)`,
+              borderRadius: 999,
+            }}
+          />
+        </div>
+      ))}
+
+      {/* ── COMETS (longer, slower, colour-gradient tails) ── */}
+      {COMETS.map((c, i) => (
+        <div
+          key={`comet-${i}`}
+          className="absolute"
+          style={{
+            top: c.top, left: c.left,
+            animation: `comet-arc ${c.dur} ${c.delay} cubic-bezier(0.25,0.1,0.25,1) infinite`,
+            opacity: 0,
+          }}
+        >
+          {/* Bright nucleus */}
+          <div
+            className="absolute rounded-full"
+            style={{
+              width: 5, height: 5,
+              background: '#ffffff',
+              boxShadow: `0 0 10px 5px ${c.color1}, 0 0 20px 10px ${c.color2}55`,
+              top: -1, left: c.len - 5,
+            }}
+          />
+          {/* Ion tail */}
+          <div
+            style={{
+              width: c.len, height: 3,
+              background: `linear-gradient(90deg, transparent 0%, ${c.color2}40 30%, ${c.color1}99 75%, #ffffff 100%)`,
+              borderRadius: 999,
+              filter: 'blur(0.5px)',
+            }}
+          />
+          {/* Diffuse dust tail (wider, more transparent) */}
+          <div
+            style={{
+              width: c.len * 0.7, height: 8,
+              marginTop: -5.5,
+              background: `linear-gradient(90deg, transparent 0%, ${c.color2}20 50%, ${c.color1}40 100%)`,
+              borderRadius: 999,
+              filter: 'blur(2px)',
+            }}
+          />
+        </div>
+      ))}
+
+      {/* ── SATELLITES (ISS-style with solar panels) ── */}
+      {SATELLITES.map((sat, i) => (
+        <div
+          key={`sat-${i}`}
+          className="absolute"
+          style={{
+            top: sat.top,
+            left: 0,
+            animation: `${sat.anim} ${sat.dur} ${sat.delay} linear infinite`,
+            opacity: 0,
+          }}
+        >
+          {/* Body */}
+          <div
+            className="relative flex items-center gap-[3px]"
+            style={{ width: sat.size * 6, height: sat.size }}
+          >
+            {/* Left solar panel */}
+            <div
+              style={{
+                width: sat.size * 2, height: sat.size * 0.6,
+                background: sat.panelColor,
+                opacity: 0.85,
+                borderRadius: 1,
+                boxShadow: `0 0 4px ${sat.panelColor}`,
+              }}
+            />
+            {/* Central bus */}
+            <div
+              style={{
+                width: sat.size * 2, height: sat.size,
+                background: '#c0d8f8',
+                borderRadius: 2,
+                boxShadow: '0 0 6px rgba(160,200,255,0.8)',
+              }}
+            />
+            {/* Right solar panel */}
+            <div
+              style={{
+                width: sat.size * 2, height: sat.size * 0.6,
+                background: sat.panelColor,
+                opacity: 0.85,
+                borderRadius: 1,
+                boxShadow: `0 0 4px ${sat.panelColor}`,
+              }}
+            />
+          </div>
+          {/* Tiny blinking signal light */}
+          <div
+            className="absolute top-0 rounded-full"
+            style={{
+              width: 2, height: 2,
+              background: '#ff4040',
+              left: sat.size * 3,
+              animation: 'deep-twinkle 1.2s linear infinite',
+            }}
+          />
+        </div>
+      ))}
+
+      {/* ── TUMBLING ASTEROIDS ── */}
+      {ASTEROIDS.map((a, i) => (
+        <div
+          key={`ast-${i}`}
+          className="absolute"
+          style={{
+            top: a.top, left: a.left,
+            animation: `asteroid-drift ${a.dur} ${a.delay} linear infinite`,
+            opacity: 0,
+          }}
+        >
+          {/* Rough rock shape using a rotated pill */}
+          <div
+            style={{
+              width: a.size * 2.5, height: a.size * 1.5,
+              background: 'radial-gradient(circle at 40% 35%, #9aa0b8 0%, #5a5f72 55%, #30333f 100%)',
+              borderRadius: '40% 60% 55% 45% / 45% 55% 50% 50%',
+              boxShadow: '0 0 4px rgba(160,170,200,0.3)',
+            }}
+          />
+        </div>
+      ))}
+    </div>
+  )
+}
+
 /**
  * Cinematic Cosmic Solar System for the Hero 1st View:
  * Features high-definition newly generated Hubble nebula artwork,
@@ -58,12 +312,12 @@ function CosmicSolarSystem({ hue }: { hue: number }) {
           }}
         />
 
-        {/* Deep space contrast veil preserving 100% typography legibility while keeping colors rich */}
+        {/* Softened deep-space veil — reduced to let nebula colours breathe through */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              'radial-gradient(circle at 50% 50%, rgba(5,6,11,0.52) 0%, rgba(5,6,11,0.28) 45%, rgba(5,6,11,0.88) 100%)',
+              'radial-gradient(circle at 50% 50%, rgba(11,13,31,0.25) 0%, rgba(11,13,31,0.12) 45%, rgba(11,13,31,0.65) 100%)',
           }}
         />
 
@@ -413,9 +667,9 @@ function CinematicShowcase({ hue }: { hue: number }) {
             </motion.div>
           </AnimatePresence>
 
-          {/* Vignette gradients for legibility & cinematic depth */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#05060b] via-[#05060b]/30 to-[#05060b]/70" />
-          <div className="pointer-events-none absolute inset-0 bg-radial-gradient from-transparent via-transparent to-[#05060b]/80" />
+          {/* Vignette gradients for legibility & cinematic depth — lightened edge */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0b0d1f] via-[#0b0d1f]/20 to-[#0b0d1f]/55" />
+          <div className="pointer-events-none absolute inset-0 bg-radial-gradient from-transparent via-transparent to-[#0b0d1f]/65" />
 
           {/* Top floating control bar inside viewport */}
           <div className="absolute inset-x-0 top-0 flex flex-wrap items-center justify-between gap-3 p-5 sm:p-7">
@@ -719,6 +973,7 @@ export function Landing() {
       {/* ------------------------------------------------------------------ hero */}
       <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-5 text-center">
         <CosmicSolarSystem hue={hue} />
+        <CosmicParticles />
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

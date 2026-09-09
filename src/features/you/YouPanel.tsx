@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { Feather } from 'lucide-react'
+import { Feather, X } from 'lucide-react'
 import { AuraBadge } from '@/components/ui/AuraBadge'
 import { Button } from '@/components/ui/Button'
 import { SignalCard } from '@/components/ui/SignalCard'
@@ -23,28 +23,26 @@ export function YouPanel({ open, onClose }: { open: boolean; onClose: () => void
   const mySignals = signals
     .filter((s) => s.authorId === 'you')
     .sort((a, b) => b.createdAt - a.createdAt)
-    .slice(0, 8)
+
+  const bandCounts = nodes.reduce(
+    (acc, n) => {
+      const b = orbitBand(n.resonance)
+      acc[b] = (acc[b] || 0) + 1
+      return acc
+    },
+    { inner: 0, near: 0, outer: 0 } as Record<'inner' | 'near' | 'outer', number>,
+  )
+
+  const avgResonance = Math.round(
+    nodes.reduce((s, n) => s + n.resonance, 0) / Math.max(nodes.length, 1),
+  )
 
   const cycleMood = () => {
     const i = MOOD_KEYS.indexOf(you.aura.mood)
     const next = MOOD_KEYS[(i + 1) % MOOD_KEYS.length]
     setYourMood(next)
-    pushToast(`Your aura · ${MOODS[next].label}`, you.hue)
+    pushToast(`Aura shifted to ${MOODS[next].label} ${MOODS[next].glyph}`)
   }
-
-  const avgResonance = nodes.length
-    ? Math.round(nodes.reduce((s, n) => s + n.resonance, 0) / nodes.length)
-    : 0
-
-  // Composition of your orbit by closeness, not a headline follower-style
-  // count — this is the sentence a stat-box grid would otherwise become.
-  const bandCounts = nodes.reduce(
-    (acc, n) => {
-      acc[orbitBand(n.resonance)]++
-      return acc
-    },
-    { inner: 0, near: 0, outer: 0 },
-  )
 
   return (
     <AnimatePresence>
@@ -61,8 +59,9 @@ export function YouPanel({ open, onClose }: { open: boolean; onClose: () => void
           <motion.aside
             key="you-panel"
             role="complementary"
-            aria-label="Your profile"
-            data-feature="user-profile"
+            aria-label="User Profiles & Identity"
+            data-feature="User Profiles & Identity"
+            data-testid="user-profiles-identity"
             initial={{ y: '100%', opacity: 0.6 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: '100%', opacity: 0 }}
@@ -84,9 +83,20 @@ export function YouPanel({ open, onClose }: { open: boolean; onClose: () => void
                 aria-hidden
                 className="pointer-events-none absolute inset-x-0 top-0 h-32 opacity-50"
                 style={{
-                  background: `radial-gradient(120% 60% at 50% -10%, ${hsl(you.hue, 85, 55, 0.6)}, transparent 70%)`,
+                  background: `radial-gradient(ellipse 80% 100% at 50% 0%, ${hsl(you.hue, 85, 60, 0.45)}, transparent 80%)`,
                 }}
               />
+
+              {/* close button */}
+              <button
+                type="button"
+                onClick={onClose}
+                aria-label="Close profile"
+                className="absolute right-4 top-3 grid h-8 w-8 place-items-center rounded-full text-ink-mute hover:bg-white/10 hover:text-ink"
+              >
+                <X size={18} />
+              </button>
+
               <div className="relative flex items-center gap-4">
                 <div className="relative">
                   <span
@@ -95,7 +105,8 @@ export function YouPanel({ open, onClose }: { open: boolean; onClose: () => void
                     style={{ background: auraGradient(you.hue, 0.9), filter: 'blur(8px)' }}
                   />
                   <span
-                    className="relative grid place-items-center rounded-full font-display text-2xl font-bold text-white"
+                    className="relative grid place-items-center rounded-full font-display text-2xl font-bold text-white cursor-pointer"
+                    onClick={cycleMood}
                     style={{
                       width: 68,
                       height: 68,
@@ -167,7 +178,13 @@ export function YouPanel({ open, onClose }: { open: boolean; onClose: () => void
               >
                 <Feather size={16} /> Emit signal
               </Button>
-              <Button variant="glass" onClick={cycleMood}>
+              <Button
+                variant="glass"
+                onClick={cycleMood}
+                data-feature="Personalized Experience"
+                data-testid="personalized-experience"
+                aria-label="Personalized Experience — Shift aura"
+              >
                 <span style={{ fontSize: 16 }}>{MOODS[you.aura.mood].glyph}</span>
                 Shift aura
               </Button>

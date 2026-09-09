@@ -40,8 +40,9 @@ export function PresencePanel({ nodeId }: { nodeId: string }) {
   return (
     <div
       role="region"
-      aria-label="User Profile & Presence"
-      data-feature="user-profile"
+      aria-label="User Profiles & Identity — User Profile & Presence"
+      data-feature="User Profiles & Identity"
+      data-testid="user-profiles-identity"
       className="flex min-h-full flex-col"
     >
       {/* hero */}

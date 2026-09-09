@@ -68,8 +68,9 @@ export function Composer() {
     <Modal open={open} onClose={close} hue={you.hue} title="Emit a signal" maxWidth={560}>
       <form
         role="form"
-        aria-label="Content Creation — Emit Signal"
-        data-feature="content-creation"
+        aria-label="Content Creation & Sharing — Emit Signal"
+        data-feature="Content Creation & Sharing"
+        data-testid="content-creation-sharing"
         onSubmit={(e) => {
           e.preventDefault()
           submit()

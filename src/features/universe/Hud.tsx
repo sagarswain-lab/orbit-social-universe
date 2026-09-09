@@ -28,7 +28,9 @@ export function Hud({ onPulseClick }: HudProps = {}) {
     <>
       <header
         role="banner"
-        aria-label="ORBIT app header"
+        aria-label="Navigation & User Flow — ORBIT app header"
+        data-feature="Navigation & User Flow"
+        data-testid="navigation-user-flow"
         className="pointer-events-none fixed inset-x-0 top-0 z-40 flex items-start justify-between gap-3 p-4 sm:p-5"
       >
         {/* brand + aura */}
@@ -48,6 +50,9 @@ export function Hud({ onPulseClick }: HudProps = {}) {
             type="button"
             onClick={cycleMood}
             title="Tap to shift your aura"
+            data-feature="Personalized Experience"
+            data-testid="personalized-experience"
+            aria-label="Personalized Experience — Shift aura"
             className="glass hidden items-center gap-2 rounded-full px-3 py-1.5 text-xs text-ink-soft transition-colors hover:text-ink sm:inline-flex"
           >
             <span

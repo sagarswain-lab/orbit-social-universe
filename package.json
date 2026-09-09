@@ -6,7 +6,7 @@
   "description": "ORBIT — your social universe, not your feed. A reimagined social experience.",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noEmit && vite build && node scripts/inline-css.mjs",
     "preview": "vite preview --port 4173",
     "lint": "tsc --noEmit",
     "test": "node --test test/blueprint.test.js"
